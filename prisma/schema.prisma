@@ -82,6 +82,8 @@ model Member {
 
   useSelectedPubs Boolean?
   selectedPubs    Publication[]
+
+  projects Project[]
 }
 
 model Venue {
@@ -150,11 +152,13 @@ model Project {
   // @projectId: for project/[projectId] and locating mdx
   projectId String @id
 
+  codename     String?
   title        String
   thumbnail    String? // used in project cards
   abstract     String?
   externalLink String?
   teamOrder    String // JSON array of team ids to order the teams correctly
 
+  members Member[]
   teams Team[]
 }

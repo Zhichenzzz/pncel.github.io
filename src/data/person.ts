@@ -9,3 +9,14 @@ export function composeFullName(person: Person) {
     return `${name} ${lastname}`;
   }
 }
+
+export function composeHeadshotPlaceholder(person: Person) {
+  const { firstname, goby, lastname } = person;
+  const placeholder = [goby || firstname, lastname]
+    .filter((s) => s !== undefined)
+    .filter((s) => s) // make sure it's not an empty string
+    .map((s) => s[0])
+    .join("")
+    .toUpperCase();
+  return placeholder;
+}

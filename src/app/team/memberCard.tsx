@@ -1,19 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { composeFullName } from "@/data/person";
+import { composeFullName, composeHeadshotPlaceholder } from "@/data/person";
 import type { Member } from "@/data/types";
 
 export default function MemberCard({ member }: Readonly<{ member: Member }>) {
   const { memberId, position, shortbio } = member;
   const { firstname, goby, lastname, avatar } = member.person!;
   const fullname = composeFullName(member.person!);
-  const placeholder = [goby || firstname, lastname]
-    .filter((s) => s !== undefined)
-    .filter((s) => s) // make sure it's not an empty string
-    .map((s) => s[0])
-    .join("")
-    .toUpperCase();
+  const placeholder = composeHeadshotPlaceholder(member.person!);
 
   return (
     <div className="shadow-xl rounded-xl overflow-clip w-full max-w-[512px] break-inside-avoid-column mb-4 mx-auto">

@@ -4,7 +4,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { metadataTmpl } from "@/data/metadata";
 import { getAllMemberIds, getMember, getMemberMdxSrc } from "@/data/member";
 import { getPubsByPerson } from "@/data/pub";
-import { composeFullName } from "@/data/person";
+import { composeFullName, composeHeadshotPlaceholder } from "@/data/person";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -67,6 +67,7 @@ export default async function MemberPage({ params: { memberId } }: Params) {
   } = member;
   const { firstname, lastname, externalLink, avatar } = member.person!;
   const fullname = composeFullName(member.person!);
+  const placeholder = composeHeadshotPlaceholder(member.person!);
 
   return (
     <DefaultMain>
@@ -100,7 +101,7 @@ export default async function MemberPage({ params: { memberId } }: Params) {
             ) : (
               <div className="avatar placeholder bg-base-300 w-full h-full">
                 <span className="text-3xl text-base-content m-auto">
-                  {[firstname[0], lastname[0]].join("").toUpperCase()}
+                  {placeholder}{" "}
                 </span>
               </div>
             )}

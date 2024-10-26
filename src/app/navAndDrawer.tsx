@@ -26,7 +26,10 @@ export default function NavAndDrawer({
     {
       title: "Projects",
       target: null,
-      sub: [{ title: "All Projects", target: "/projects" }],
+      sub: [{ title: "All Projects", target: "/projects" },
+        { title: "PRGA", target: "/projects/prga"},
+        { title: "DORA", target: "/projects/dora" },
+      ],
     },
     { title: "Publications", target: "/pubs", sub: [] },
     { title: "Team", target: "/team", sub: [] },
