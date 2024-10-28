@@ -41,7 +41,7 @@ export function validateTag(tag: _TagExt): Tag {
   const TagTypeValues = Object.keys(TagType).filter((k) => isNaN(Number(k)));
   if (tag.type && !TagTypeValues.includes(tag.type)) {
     throw new Error(
-      `Database data error: invalid type (${tag.type}) for tag ${tag.id}`
+      `Database data error: invalid type (${tag.type}) for tag ${tag.id}`,
     );
   }
 
@@ -63,11 +63,11 @@ export function validatePerson(person: _PersonExt): Person {
 export function validateMember(member: _MemberExt): Member {
   // check "role" value
   const MemberRoleValues = Object.keys(MemberRole).filter((k) =>
-    isNaN(Number(k))
+    isNaN(Number(k)),
   );
   if (member.role && !MemberRoleValues.includes(member.role)) {
     throw new Error(
-      `Database data error: invalid role (${member.role}) for member (id:${member.memberId})`
+      `Database data error: invalid role (${member.role}) for member (id:${member.memberId})`,
     );
   }
 
@@ -82,11 +82,11 @@ export function validateMember(member: _MemberExt): Member {
 export function validateVenue(venue: _VenueExt): Venue {
   // check "type" value
   const VenueTypeValues = Object.keys(VenueType).filter((k) =>
-    isNaN(Number(k))
+    isNaN(Number(k)),
   );
   if (venue.type && !VenueTypeValues.includes(venue.type)) {
     throw new Error(
-      `Database data error: invalid type (${venue.type}) for venue ${venue.id}`
+      `Database data error: invalid type (${venue.type}) for venue ${venue.id}`,
     );
   }
 
@@ -102,7 +102,7 @@ export function validatePubResource(rsc: _PubRscExt): PubResource {
   const LinkIconValues = Object.keys(LinkIcon).filter((k) => isNaN(Number(k)));
   if (rsc.icon && !LinkIconValues.includes(rsc.icon)) {
     throw new Error(
-      `Database data error: invalid icon (${rsc.icon}) for resource (id:${rsc.id})`
+      `Database data error: invalid icon (${rsc.icon}) for resource (id:${rsc.id})`,
     );
   }
 
@@ -118,7 +118,7 @@ export function validatePublication(pub: _PubExt): Publication {
   const PubTypeValues = Object.keys(PubType).filter((k) => isNaN(Number(k)));
   if (pub.type && !PubTypeValues.includes(pub.type)) {
     throw new Error(
-      `Database data error: invalid type (${pub.type}) for publication "${pub.id}"`
+      `Database data error: invalid type (${pub.type}) for publication "${pub.id}"`,
     );
   }
 
@@ -130,17 +130,17 @@ export function validatePublication(pub: _PubExt): Publication {
       order = JSON.parse(pub.authorOrder);
     } catch (e) {
       throw new Error(
-        `Database data error: failed to parse authorOrder for publication ${pub.id}`
+        `Database data error: failed to parse authorOrder for publication ${pub.id}`,
       );
     }
 
     if (order.length != pub.authors.length) {
       throw new Error(
-        `Database data error: len(authorOrder) != len(authors) for publication ${pub.id}`
+        `Database data error: len(authorOrder) != len(authors) for publication ${pub.id}`,
       );
     } else if (new Set(order).size != order.length) {
       throw new Error(
-        `Database data error: duplicate entry in authorOrder for publication ${pub.id}`
+        `Database data error: duplicate entry in authorOrder for publication ${pub.id}`,
       );
     }
 
@@ -148,11 +148,11 @@ export function validatePublication(pub: _PubExt): Publication {
       const authors = pub.authors!.filter((author) => author.id === id);
       if (authors.length === 0) {
         throw new Error(
-          `Database data error: no author with ID ${id} in the authors list for publication ${pub.id}`
+          `Database data error: no author with ID ${id} in the authors list for publication ${pub.id}`,
         );
       } else if (authors.length > 1) {
         throw new Error(
-          `Database data error: multiple authors with ID ${id} in the authors list for publication ${pub.id}`
+          `Database data error: multiple authors with ID ${id} in the authors list for publication ${pub.id}`,
         );
       }
       return validatePerson(authors[0]);
@@ -173,7 +173,7 @@ export function validatePublication(pub: _PubExt): Publication {
 export const queryPubExt = Prisma.validator(
   prisma,
   "publication",
-  "findMany"
+  "findMany",
 )({
   include: {
     tags: true,

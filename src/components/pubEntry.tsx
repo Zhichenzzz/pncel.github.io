@@ -14,7 +14,7 @@ import {
   faVideo,
   faGlobe,
   faP,
-  fa1
+  fa1,
 } from "@fortawesome/free-solid-svg-icons";
 import { generateBibtexForPub } from "@/data/pub";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -42,7 +42,7 @@ export default function PubEntry({
   const context = useContext(DataContext);
   if (!context) {
     throw new Error(
-      "Source code error: PubEntry must be used inside ContextProvider"
+      "Source code error: PubEntry must be used inside ContextProvider",
     );
   }
 

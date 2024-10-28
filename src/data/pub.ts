@@ -3,7 +3,7 @@ import prisma, { queryPubExt, validatePublication } from "./prisma";
 import type { Publication } from "./types";
 
 export async function getAllPubs(
-  venueTypes: VenueType[] = [VenueType.conference, VenueType.journal]
+  venueTypes: VenueType[] = [VenueType.conference, VenueType.journal],
 ) {
   const pubs = await prisma.publication.findMany(queryPubExt);
   const validated = pubs
@@ -14,7 +14,7 @@ export async function getAllPubs(
 
 export async function getPubsByPerson(
   personId: number,
-  selectByMemberId?: string
+  selectByMemberId?: string,
 ) {
   const where = {
     authors: {

@@ -9,7 +9,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         Children.only(children) &&
         Children.map(
           children,
-          (child) => React.isValidElement(child) && child.type === "code"
+          (child) => React.isValidElement(child) && child.type === "code",
         )?.every((i) => i)
       ) {
         return <CopyableCode>{children}</CopyableCode>;

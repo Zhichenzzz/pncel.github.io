@@ -26,7 +26,7 @@ const nodeToString = (node?: React.ReactNode): string => {
 };
 
 const childrenToString = (
-  children: React.ReactNode | React.ReactNode[]
+  children: React.ReactNode | React.ReactNode[],
 ): string => {
   if (!(children instanceof Array) && !React.isValidElement(children)) {
     return nodeToString(children);

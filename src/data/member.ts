@@ -32,11 +32,11 @@ export async function getMember(memberId: string) {
 
   if (!member) {
     throw new Error(
-      `Database data or source code error: no member found for memberId ${memberId}`
+      `Database data or source code error: no member found for memberId ${memberId}`,
     );
   } else if (!member.person) {
     throw new Error(
-      `Database data or source code error: no person found for id ${member.personId}`
+      `Database data or source code error: no person found for id ${member.personId}`,
     );
   }
 
@@ -47,7 +47,7 @@ export async function getMemberMdxSrc(memberId: string) {
   // get mdx if there is one
   const mdxSrc = await readFile(
     process.cwd() + `/src/app/team/[memberId]/${memberId}.mdx`,
-    "utf-8"
+    "utf-8",
   ).catch((e) => {
     if (e.code == "ENOENT") {
       return null; // if no file, just return null

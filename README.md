@@ -2,7 +2,7 @@
 
 ## For Group Members
 
-If you wish to add personalized contents to your own page, contact Ang for your member ID.  Once you have the member ID, create an [MDX](https://mdxjs.com/) (Markdown w/ embedded JSX) file under [`src/app/team/\[memberId\]`](https://github.com/pncel/pncel.github.io/tree/main/src/app/team/%5BmemberId%5D) with your member ID (i.e., `[memberId].mdx`). Edit the file as you wish, then create a PR/branch and ask Ang to merge it into the main branch.
+If you wish to add personalized contents to your own page, contact Ang for your member ID. Once you have the member ID, create an [MDX](https://mdxjs.com/) (Markdown w/ embedded JSX) file under [`src/app/team/\[memberId\]`](https://github.com/pncel/pncel.github.io/tree/main/src/app/team/%5BmemberId%5D) with your member ID (i.e., `[memberId].mdx`). Edit the file as you wish, then create a PR/branch and ask Ang to merge it into the main branch.
 
 The website also supports links to your other personal pages, including: your own website, Google Scholar, OrcID, GitHub, LinkedIn, X (formerly Twitter), Facebook, Instagram, Youtube. In addition, a short statement can be shown at the team page.
 
@@ -26,5 +26,5 @@ npx prisma studio
 # then visit http://localhost:5555 (or another port according to the command line output)
 
 # interactive debug
-npx next dev
+npm run dev
 ```

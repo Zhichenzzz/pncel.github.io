@@ -23,7 +23,7 @@ export default async function Team() {
     MemberRole.ms,
     MemberRole.ug,
     MemberRole.other,
-  ]
+  ];
 
   const groups = allMembers.reduce((g: Map<MemberRole, Member[]>, m) => {
     const members = g.get(m.role) || [];
@@ -33,9 +33,9 @@ export default async function Team() {
   }, new Map<MemberRole, Member[]>());
 
   const groups_ordered = Array.from(groups.entries()).sort(([r0], [r1]) => {
-    return group_order.indexOf(r0) - group_order.indexOf(r1)
-  })
-  
+    return group_order.indexOf(r0) - group_order.indexOf(r1);
+  });
+
   return (
     <div>
       <DefaultMDX>
@@ -53,7 +53,7 @@ export default async function Team() {
                   ))}
                 </div>
               </div>
-            )
+            ),
         )}
       </DefaultMain>
     </div>

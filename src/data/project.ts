@@ -19,7 +19,7 @@ export async function getProject(projectId: string) {
 
   if (!project) {
     throw new Error(
-      `Database data or source code error: no project found for projectId ${projectId}`
+      `Database data or source code error: no project found for projectId ${projectId}`,
     );
   }
 
@@ -30,7 +30,7 @@ export async function getProjectMdxSrc(projectId: string) {
   // get mdx if there is one
   const mdxSrc = await readFile(
     process.cwd() + `/src/app/projects/[projectId]/${projectId}.mdx`,
-    "utf-8"
+    "utf-8",
   ).catch((e) => {
     if (e.code == "ENOENT") {
       return null; // if no file, just return null

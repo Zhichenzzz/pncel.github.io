@@ -7,7 +7,7 @@ import { faP, fa1 } from "@fortawesome/free-solid-svg-icons";
 export default function PubList({
   pubs,
   highlightedPersonId,
-  altStyle
+  altStyle,
 }: Readonly<{
   pubs: Publication[];
   highlightedPersonId?: number;
