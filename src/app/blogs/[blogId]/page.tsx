@@ -10,7 +10,7 @@ interface Params {
 }
 
 export async function generateMetadata({ params: { blogId } }: Params) {
-  var title = ""
+  var title = "";
   if (blogId !== "_") {
     title = require(`@/app/blogs/[blogId]/${blogId}.mdx`)["title"];
   }
