@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import ThemeToggle from "./themeToggle";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export default function NavAndDrawer({
@@ -12,6 +12,7 @@ export default function NavAndDrawer({
   interface NavDataSubType {
     title: string;
     target: string;
+    ref: React.RefObject<HTMLAnchorElement>;
   }
 
   interface NavDataType {
@@ -27,9 +28,21 @@ export default function NavAndDrawer({
       title: "Projects",
       target: null,
       sub: [
-        { title: "All Projects", target: "/projects" },
-        { title: "PRGA", target: "/projects/prga" },
-        { title: "DORA", target: "/projects/dora" },
+        {
+          title: "All Projects",
+          target: "/projects",
+          ref: useRef<HTMLAnchorElement>(null),
+        },
+        {
+          title: "PRGA",
+          target: "/projects/prga",
+          ref: useRef<HTMLAnchorElement>(null),
+        },
+        {
+          title: "DORA",
+          target: "/projects/dora",
+          ref: useRef<HTMLAnchorElement>(null),
+        },
       ],
     },
     { title: "Publications", target: "/pubs", sub: [] },
@@ -90,35 +103,36 @@ export default function NavAndDrawer({
                       return (
                         <li key={item.title}>
                           {item.sub.length > 0 ? (
-                            <details
-                              className="z-20"
-                              open={activeNavSub === item.title}
-                            >
-                              <summary
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  if (activeNavSub === item.title) {
-                                    setActiveNavSub(null);
-                                  } else {
-                                    setActiveNavSub(item.title);
-                                  }
-                                }}
+                            <div className="dropdown dropdown-bottom p-0">
+                              <div
+                                className="px-4 py-2"
+                                role="button"
+                                tabIndex={0}
                               >
                                 {item.title}
-                              </summary>
-                              <ul className="bg-base-300 rounded-t-none">
-                                {item.sub.map((i) => (
-                                  <li key={i.title}>
-                                    <Link
-                                      href={i.target}
-                                      className="text-nowrap"
-                                    >
-                                      {i.title}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </details>
+                              </div>
+                              <div
+                                tabIndex={0}
+                                className="dropdown-content bg-base-300 rounded-lg rounded-t-none z-[1] pt-2"
+                              >
+                                <ul>
+                                  {item.sub.map((i) => (
+                                    <li key={i.title}>
+                                      <Link
+                                        href={i.target}
+                                        className="text-nowrap"
+                                        ref={i.ref}
+                                        onClick={(e) => {
+                                          i.ref!.current?.blur();
+                                        }}
+                                      >
+                                        {i.title}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
                           ) : item.target === null ? (
                             item.title
                           ) : (
