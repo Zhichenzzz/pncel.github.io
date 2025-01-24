@@ -15,6 +15,19 @@ export async function getProject(projectId: string) {
     where: {
       projectId: projectId,
     },
+    include: {
+      members: {
+        include: {
+          person: true
+        }
+      },
+      teams: {
+        include: {
+          group: true,
+          members: true,
+        }
+      }
+    }
   });
 
   if (!project) {

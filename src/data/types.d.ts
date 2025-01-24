@@ -5,6 +5,9 @@ import {
   Venue as _Venue,
   PubResource as _PubResource,
   Publication as _Publication,
+  Team as _Team,
+  Group as _Group,
+  Project as _Project,
 } from "@prisma/client";
 
 import {
@@ -24,12 +27,14 @@ export type Tag = Omit<_Tag, "type"> & {
 export type Person = _Person & {
   member?: Member | null;
   pubs?: Publication[];
+  teams?: Team[];
 };
 
 export type Member = Omit<_Member, "role"> & {
   role: MemberRole;
   person?: Person | null;
   selectedPubs?: Publication[];
+  projects?: Project[];
 };
 
 export type Venue = Omit<_Venue, "type"> & {
@@ -50,3 +55,18 @@ export type Publication = Omit<_Publication, "type"> & {
   resources?: PubResource[];
   selectedBy?: Member[];
 };
+
+export type Team = _Team & {
+  members?: Person[];
+  group?: Group;
+  projects?: Project[];
+}
+
+export type Group = _Group & {
+  teams?: Team[];
+}
+
+export type Project = _Project & {
+  members?: Member[];
+  teams?: Team[];
+}

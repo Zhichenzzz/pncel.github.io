@@ -36,12 +36,12 @@ export default async function Pubs() {
   return (
     <div>
       <DefaultMDX>
-        <h1>Publications</h1>
+        <h1 className="pb-4">Publications</h1>
       </DefaultMDX>
       <DefaultMain>
         {sortedByYear.map(({ year, pubs, idx }) => (
-          <div key={year}>
-            <h2 className="divider text-2xl">{`${year}`}</h2>
+          <div key={year} className="flex flex-row p-2 gap-4">
+            <h2 className="divider divider-horizontal divider-start text-2xl">{`${year}`}</h2>
             <PubList pubs={pubs} altStyle={idx % 2 !== 0} />
           </div>
         ))}

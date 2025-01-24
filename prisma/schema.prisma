@@ -139,13 +139,21 @@ model Publication {
 
 model Team {
   id   Int     @id @default(autoincrement())
+  groupId Int?
+
+  group Group? @relation(fields: [groupId], references: [id])
+  memberOrder String // JSON array of person ids to order the members correctly
+  members     Person[]
+  projects    Project[]
+}
+
+model Group {
+  id   Int     @id @default(autoincrement())
   name String
   logo String?
   link String?
 
-  memberOrder String // JSON array of person ids to order the members correctly
-  members     Person[]
-  projects    Project[]
+  teams Team[]
 }
 
 model Project {
@@ -157,7 +165,8 @@ model Project {
   thumbnail    String? // used in project cards
   abstract     String?
   externalLink String?
-  teamOrder    String // JSON array of team ids to order the teams correctly
+  memberOrder  String? // JSON array of member ids to order the members correctly
+  teamOrder    String? // JSON array of team ids to order the teams correctly
 
   members Member[]
   teams Team[]
