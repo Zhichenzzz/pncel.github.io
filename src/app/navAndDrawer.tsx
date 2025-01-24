@@ -47,6 +47,7 @@ export default function NavAndDrawer({
     },
     { title: "Publications", target: "/pubs", sub: [] },
     { title: "Team", target: "/team", sub: [] },
+    { title: "Join Us", target: "/join", sub: [] },
   ];
 
   const pathname = usePathname();
