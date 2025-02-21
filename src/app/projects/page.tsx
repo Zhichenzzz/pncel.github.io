@@ -1,4 +1,4 @@
-import Avatar from "@/components/avatar";
+// import Avatar from "@/components/avatar";
 import { getAllMembers } from "@/data/member";
 import { metadataTmpl } from "@/data/metadata";
 import DefaultMain from "@/layouts/defaultMain";
