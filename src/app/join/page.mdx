@@ -1,12 +1,14 @@
 import { metadataTmpl } from "@/data/metadata";
-import DefaulMDX from "@/layouts/defaultMdx";
+import DefaultMain from "@/layouts/defaultMain";
+import DefaultMDX from "@/layouts/defaultMdx";
 
 export const metadata = {
   ...metadataTmpl,
   title: metadataTmpl.title + " | Join Us",
 };
 
-<DefaulMDX>
+<DefaultMain>
+<DefaultMDX>
 
 # Join Us
 
@@ -110,4 +112,5 @@ quarter ends.
 Warning ahead -- to make it fair to all other students taking classes, it
 won't be easy to get a 4.0 from me.
 
-</DefaulMDX>
+</DefaultMDX>
+</DefaultMain>

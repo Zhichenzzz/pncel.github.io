@@ -68,7 +68,13 @@ export default function NavAndDrawer({
         checked={isSideBarOpen}
         onChange={() => {}}
       />
-      <div className="drawer-content bg-base-100 text-base-content flex flex-col min-h-screen overflow-x-hidden">
+      <div
+        className={
+          "drawer-content bg-base-100 text-base-content overflow-x-hidden " +
+          "flex flex-col " +
+          "h-screen overflow-y-auto" /* force creation of scrollable area */
+        }
+      >
         <div className="bg-base-300 w-full">
           <nav className="navbar justify-between mx-auto max-w-screen-2xl">
             <div className="flex grow flex-row justify-start gap-1">
@@ -176,6 +182,16 @@ export default function NavAndDrawer({
           </nav>
         </div>
         {children}
+        <div className="bg-base-300">
+          <footer className="footer items-center p-2 text-base-content mx-auto max-w-screen-2xl">
+            <aside className="items-center grid-flow-col">
+              <Link className="btn btn-ghost text-xl" href="/">
+                PᴺCEL
+              </Link>
+              <p>Copyright © 2024 - All right reserved</p>
+            </aside>
+          </footer>
+        </div>
       </div>
       <div className="drawer-side">
         <div

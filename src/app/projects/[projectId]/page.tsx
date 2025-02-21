@@ -3,6 +3,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { metadataTmpl } from "@/data/metadata";
 import { getAllProjectIds, getProject, getProjectMdxSrc } from "@/data/project";
 import DefaultMain from "@/layouts/defaultMain";
+import DefaultMDX from "@/layouts/defaultMdx";
 
 interface Params {
   params: {
@@ -28,7 +29,7 @@ export default async function ProjectPage({ params: { projectId } }: Params) {
   const mdxSrc = await getProjectMdxSrc(projectId);
   return (
     <DefaultMain>
-      <div className="prose 2xl:prose-lg max-w-full">
+      <DefaultMDX>
         <h1>{project.title}</h1>
         <MDXRemote
           source={
@@ -37,7 +38,7 @@ export default async function ProjectPage({ params: { projectId } }: Params) {
           }
           components={useMDXComponents({})}
         />
-      </div>
+      </DefaultMDX>
     </DefaultMain>
   );
 }

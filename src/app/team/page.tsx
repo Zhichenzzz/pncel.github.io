@@ -1,5 +1,5 @@
-import DefaultMDX from "@/layouts/defaultMdx";
 import DefaultMain from "@/layouts/defaultMain";
+import DefaultMDX from "@/layouts/defaultMdx";
 import MemberCard from "./memberCard";
 import { metadataTmpl } from "@/data/metadata";
 import { getAllMembers } from "@/data/member";
@@ -37,25 +37,23 @@ export default async function Team() {
   });
 
   return (
-    <div>
+    <DefaultMain>
       <DefaultMDX>
         <h1>Team</h1>
       </DefaultMDX>
-      <DefaultMain>
-        {groups_ordered.map(
-          ([role, members]) =>
-            members.length > 0 && (
-              <div key={role}>
-                <p className="divider text-xl 2xl:text-2xl">{role}</p>
-                <div className="columns-1 lg:columns-2 2xl:columns-3 gap-x-4 py-4">
-                  {members.map((m) => (
-                    <MemberCard member={m} key={m.memberId}></MemberCard>
-                  ))}
-                </div>
+      {groups_ordered.map(
+        ([role, members]) =>
+          members.length > 0 && (
+            <div key={role}>
+              <p className="divider text-xl 2xl:text-2xl">{role}</p>
+              <div className="columns-1 lg:columns-2 2xl:columns-3 gap-x-4 py-4">
+                {members.map((m) => (
+                  <MemberCard member={m} key={m.memberId}></MemberCard>
+                ))}
               </div>
-            ),
-        )}
-      </DefaultMain>
-    </div>
+            </div>
+          )
+      )}
+    </DefaultMain>
   );
 }

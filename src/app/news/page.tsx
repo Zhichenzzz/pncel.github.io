@@ -1,4 +1,5 @@
 import { metadataTmpl } from "@/data/metadata";
+import DefaultMain from "@/layouts/defaultMain";
 import DefaultMDX from "@/layouts/defaultMdx";
 
 export const metadata = {
@@ -8,10 +9,10 @@ export const metadata = {
 
 export default async function News() {
   return (
-    <div>
+    <DefaultMain>
       <DefaultMDX>
         <p>Under construction...</p>
       </DefaultMDX>
-    </div>
+    </DefaultMain>
   );
 }

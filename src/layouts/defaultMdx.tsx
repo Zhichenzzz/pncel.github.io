@@ -2,11 +2,13 @@ import React from "react";
 
 export default function DefaultMDX({
   children,
+  className = "",
 }: Readonly<{
   children: React.ReactNode;
+  className?: string;
 }>) {
   return (
-    <div className="prose 2xl:prose-lg max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl mx-auto py-4">
+    <div className={`prose 2xl:prose-lg max-w-full ${className}`}>
       {children}
     </div>
   );

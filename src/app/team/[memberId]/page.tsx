@@ -23,8 +23,10 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import DefaultMain from "@/layouts/defaultMain";
 import PubList, { PubListFootnote } from "@/components/pubList";
+import DefaultMDX from "@/layouts/defaultMdx";
+import DefaultMain from "@/layouts/defaultMain";
+import Link from "next/link";
 config.autoAddCss = false;
 
 interface Params {
@@ -70,187 +72,209 @@ export default async function MemberPage({ params: { memberId } }: Params) {
   const placeholder = composeHeadshotPlaceholder(member.person!);
 
   return (
-    <DefaultMain>
-      <div className="flex flex-col lg:flex-row gap-4 justify-center">
-        {/* let's have a sticky sidebar for avatar and contact info */}
-        {/* sidebar becomes a normal section on top of page on small screens */}
+    <DefaultMain className="flex flex-col lg:flex-row gap-2 lg:gap-6">
+      {/* let's have a sticky sidebar for avatar and contact info */}
+      {/* sidebar becomes a normal section on top of page on small screens */}
+      <div
+        className={
+          /* as the element in the parent flex container */
+          "self-start flex-none " +
+          /* flex container */
+          "flex justify-start items-center content-center py-4 " +
+          "flex-row lg:flex-col gap-4 lg:gap-2 " +
+          /* put on top for small screens; sticky for large screens */
+          "w-full lg:w-[200px] " +
+          "lg:sticky lg:top-0 lg:overflow-y-auto "
+        }
+      >
         <div
           className={
-            "flex flex-row justify-start gap-4 items-center content-center w-full py-2 " +
-            "lg:flex-none lg:flex-col lg:gap-2 lg:w-[194pt] " +
-            "lg:sticky lg:self-start lg:top-0 lg:max-h-screen lg:overflow-y-auto"
+            "flex-none self-start lg:self-center w-36 h-36 lg:w-48 lg:h-48 " +
+            "rounded-2xl ring ring-neutral overflow-clip"
           }
         >
-          <div
-            className={
-              "flex-none self-start lg:self-center w-36 h-36 lg:w-48 lg:h-48 " +
-              "rounded-2xl ring ring-neutral overflow-clip"
-            }
-          >
-            {avatar ? (
-              <div className="avatar w-full h-full">
-                <Image
-                  className="m-0"
-                  width={512}
-                  height={512}
-                  src={avatar}
-                  alt={fullname}
-                  objectFit="cover"
-                ></Image>
-              </div>
-            ) : (
-              <div className="avatar placeholder bg-base-300 w-full h-full">
-                <span className="text-3xl text-base-content m-auto">
-                  {placeholder}{" "}
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="flex-grow">
-            <p className="text-lg font-bold lg:text-center text-left">
-              {fullname}
+          {avatar ? (
+            <div className="avatar w-full h-full">
+              <Image
+                className="m-0"
+                width={512}
+                height={512}
+                src={avatar}
+                alt={fullname}
+                objectFit="cover"
+              ></Image>
+            </div>
+          ) : (
+            <div className="avatar placeholder bg-base-300 w-full h-full">
+              <span className="text-3xl text-base-content m-auto">
+                {placeholder}{" "}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="max-lg:flex-grow">
+          <p className="text-lg font-bold lg:text-center text-left">
+            {fullname}
+          </p>
+          {position && <p className="lg:text-center text-left">{position}</p>}
+          {office && (
+            <p className="lg:text-center text-left">
+              <FontAwesomeIcon icon={faLocationDot} />
+              &nbsp;
+              {office}
             </p>
-            {position && <p className="lg:text-center text-left">{position}</p>}
-            {office && (
-              <p className="lg:text-center text-left">
-                <FontAwesomeIcon icon={faLocationDot} />
+          )}
+          {email && (
+            <p className="lg:text-center text-left">
+              <a href={"mailto:" + email}>
+                <FontAwesomeIcon icon={faEnvelope} />
                 &nbsp;
-                {office}
-              </p>
-            )}
-            {email && (
-              <p className="lg:text-center text-left">
-                <a href={"mailto:" + email}>
-                  <FontAwesomeIcon icon={faEnvelope} />
-                  &nbsp;
-                  {email.replaceAll("@", " (at) ")}
+                {email.replaceAll("@", " (at) ")}
+              </a>
+            </p>
+          )}
+          {(externalLink ||
+            gscholar ||
+            orcid ||
+            github ||
+            linkedin ||
+            twitter ||
+            facebook ||
+            instagram ||
+            youtube) && (
+            <div
+              className={
+                "flex flex-row w-full flex-wrap gap-x-2 gap-y-0 " +
+                "justify-start lg:justify-center items-center content-center text-lg"
+              }
+            >
+              {externalLink && (
+                <a
+                  href={externalLink}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="Personal Website"
+                >
+                  <FontAwesomeIcon icon={faGlobe}></FontAwesomeIcon>
                 </a>
-              </p>
-            )}
-            {(externalLink ||
-              gscholar ||
-              orcid ||
-              github ||
-              linkedin ||
-              twitter ||
-              facebook ||
-              instagram ||
-              youtube) && (
-              <div
-                className={
-                  "flex flex-row w-full flex-wrap gap-x-2 gap-y-0 " +
-                  "justify-start lg:justify-center items-center content-center text-lg"
-                }
-              >
-                {externalLink && (
-                  <a
-                    href={externalLink}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="Personal Website"
-                  >
-                    <FontAwesomeIcon icon={faGlobe}></FontAwesomeIcon>
-                  </a>
-                )}
-                {gscholar && (
-                  <a
-                    href={gscholar}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="Google Scholar"
-                  >
-                    <FontAwesomeIcon icon={faGoogleScholar}></FontAwesomeIcon>
-                  </a>
-                )}
-                {orcid && (
-                  <a
-                    href={orcid}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="ORCiD"
-                  >
-                    <FontAwesomeIcon icon={faOrcid}></FontAwesomeIcon>
-                  </a>
-                )}
-                {github && (
-                  <a
-                    href={github}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="GitHub"
-                  >
-                    <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
-                  </a>
-                )}
-                {linkedin && (
-                  <a
-                    href={linkedin}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="LinkedIn"
-                  >
-                    <FontAwesomeIcon icon={faLinkedin}></FontAwesomeIcon>
-                  </a>
-                )}
-                {twitter && (
-                  <a
-                    href={twitter}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="X (Twitter)"
-                  >
-                    <FontAwesomeIcon icon={faXTwitter}></FontAwesomeIcon>
-                  </a>
-                )}
-                {instagram && (
-                  <a
-                    href={instagram}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="Instagram"
-                  >
-                    <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
-                  </a>
-                )}
-                {facebook && (
-                  <a
-                    href={facebook}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="Facebook"
-                  >
-                    <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
-                  </a>
-                )}
-                {youtube && (
-                  <a
-                    href={youtube}
-                    target="_blank"
-                    className="tooltip"
-                    data-tip="Youtube"
-                  >
-                    <FontAwesomeIcon icon={faYoutube}></FontAwesomeIcon>
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
+              )}
+              {gscholar && (
+                <a
+                  href={gscholar}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="Google Scholar"
+                >
+                  <FontAwesomeIcon icon={faGoogleScholar}></FontAwesomeIcon>
+                </a>
+              )}
+              {orcid && (
+                <a
+                  href={orcid}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="ORCiD"
+                >
+                  <FontAwesomeIcon icon={faOrcid}></FontAwesomeIcon>
+                </a>
+              )}
+              {github && (
+                <a
+                  href={github}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="GitHub"
+                >
+                  <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
+                </a>
+              )}
+              {linkedin && (
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="LinkedIn"
+                >
+                  <FontAwesomeIcon icon={faLinkedin}></FontAwesomeIcon>
+                </a>
+              )}
+              {twitter && (
+                <a
+                  href={twitter}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="X (Twitter)"
+                >
+                  <FontAwesomeIcon icon={faXTwitter}></FontAwesomeIcon>
+                </a>
+              )}
+              {instagram && (
+                <a
+                  href={instagram}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="Instagram"
+                >
+                  <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
+                </a>
+              )}
+              {facebook && (
+                <a
+                  href={facebook}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="Facebook"
+                >
+                  <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+                </a>
+              )}
+              {youtube && (
+                <a
+                  href={youtube}
+                  target="_blank"
+                  className="tooltip"
+                  data-tip="Youtube"
+                >
+                  <FontAwesomeIcon icon={faYoutube}></FontAwesomeIcon>
+                </a>
+              )}
+            </div>
+          )}
         </div>
-        <div className="flex-auto min-w-0 lg:max-w-screen-sm xl:max-w-screen-md 2xl:max-w-screen-lg lg:py-4">
-          <div className="prose 2xl:prose-lg max-w-full">
-            <MDXRemote
-              source={mdxSrc || "This person is busy changing the world..."}
-              components={useMDXComponents({})}
-            />
-          </div>
-            {pubs.length > 0 && (
-              <div>
-                <p className="divider text-xl 2xl:text-2xl">Selected Publications</p>
-                <PubList pubs={pubs} highlightedPersonId={member.person!.id} />
-                <PubListFootnote />
-              </div>
-            )}
-        </div>
+        <div className="divider max-lg:hidden"></div>
+        <ul className="menu w-full max-lg:hidden">
+          <li>
+            <Link href="#personal-statement">Personal Statement</Link>
+          </li>
+          {pubs.length > 0 && (
+            <li>
+              <Link href="#selected-publications">Selected Publications</Link>
+            </li>
+          )}
+        </ul>
+      </div>
+      <div
+        className="flex-grow min-w-0 lg:max-w-screen-sm xl:max-w-screen-md 2xl:max-w-screen-lg lg:py-4"
+      >
+        <DefaultMDX>
+          <h2 id="personal-statement">Personal Statement</h2>
+          <MDXRemote
+            source={mdxSrc || "This person is busy changing the world..."}
+            components={useMDXComponents({})}
+          />
+        </DefaultMDX>
+        {pubs.length > 0 && (
+          <>
+            <div className="divider"></div>
+            <DefaultMDX className="py-4">
+              <h2 id="selected-publications">Selected Publications</h2>
+            </DefaultMDX>
+            <div>
+              <PubList pubs={pubs} highlightedPersonId={member.person!.id} />
+              <PubListFootnote />
+            </div>
+          </>
+        )}
       </div>
     </DefaultMain>
   );

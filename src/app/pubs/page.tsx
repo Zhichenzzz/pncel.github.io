@@ -2,8 +2,8 @@ import PubList, { PubListFootnote } from "@/components/pubList";
 import { metadataTmpl } from "@/data/metadata";
 import { getAllPubs } from "@/data/pub";
 import { Publication } from "@/data/types";
-import DefaultMain from "@/layouts/defaultMain";
 import DefaultMDX from "@/layouts/defaultMdx";
+import DefaultMain from "@/layouts/defaultMain";
 
 export const metadata = {
   ...metadataTmpl,
@@ -34,19 +34,17 @@ export default async function Pubs() {
     }, new Array<{ year: number; pubs: Publication[]; idx: number }>());
 
   return (
-    <div>
+    <DefaultMain>
       <DefaultMDX>
         <h1 className="lg:pb-4">Publications</h1>
       </DefaultMDX>
-      <DefaultMain>
-        {sortedByYear.map(({ year, pubs, idx }) => (
-          <div key={year} className="lg:flex lg:flex-row lg:p-2 lg:gap-4">
-            <h2 className="divider lg:divider-horizontal lg:divider-start text-2xl">{`${year}`}</h2>
-            <PubList pubs={pubs} altStyle={idx % 2 !== 0} />
-          </div>
-        ))}
-        <PubListFootnote />
-      </DefaultMain>
-    </div>
+      {sortedByYear.map(({ year, pubs, idx }) => (
+        <div key={year} className="lg:flex lg:flex-row lg:p-2 lg:gap-4">
+          <h2 className="divider lg:divider-horizontal lg:divider-start text-2xl">{`${year}`}</h2>
+          <PubList pubs={pubs} altStyle={idx % 2 !== 0} />
+        </div>
+      ))}
+      <PubListFootnote />
+    </DefaultMain>
   );
 }

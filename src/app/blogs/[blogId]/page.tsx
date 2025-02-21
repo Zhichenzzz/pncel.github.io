@@ -2,6 +2,8 @@ import { readdir, readFile } from "fs/promises";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { useMDXComponents } from "@/mdx-components";
 import { metadataTmpl } from "@/data/metadata";
+import DefaultMain from "@/layouts/defaultMain";
+import DefaultMDX from "@/layouts/defaultMdx";
 
 interface Params {
   params: {
@@ -38,14 +40,16 @@ export default async function BlogPage({ params: { blogId } }: Params) {
     title = require(`@/app/blogs/[blogId]/${blogId}.mdx`);
     mdxSrc = await readFile(
       `${process.cwd()}/src/app/blogs/[blogId]/${blogId}.mdx`,
-      "utf-8",
+      "utf-8"
     );
   }
 
   return (
-    <div className="prose 2xl:prose-lg max-w-full">
-      <h1>{title}</h1>
-      <MDXRemote source={mdxSrc} components={useMDXComponents({})} />
-    </div>
+    <DefaultMain>
+      <DefaultMDX>
+        <h1>{title}</h1>
+        <MDXRemote source={mdxSrc} components={useMDXComponents({})} />
+      </DefaultMDX>
+    </DefaultMain>
   );
 }

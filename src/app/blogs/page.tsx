@@ -1,6 +1,7 @@
 import { readdir, readFile } from "fs/promises";
 import { metadataTmpl } from "@/data/metadata";
 import DefaultMDX from "@/layouts/defaultMdx";
+import DefaultMain from "@/layouts/defaultMain";
 
 export const metadata = {
   ...metadataTmpl,
@@ -26,7 +27,7 @@ async function getAllBlogs() {
 export default async function Blogs() {
   const blogs = await getAllBlogs();
   return (
-    <div>
+    <DefaultMain>
       <DefaultMDX>
         {blogs.map(({ exports }) => (
           <p key={exports["title"]}>
@@ -34,6 +35,6 @@ export default async function Blogs() {
           </p>
         ))}
       </DefaultMDX>
-    </div>
+    </DefaultMain>
   );
 }

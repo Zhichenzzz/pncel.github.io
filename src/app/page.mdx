@@ -1,14 +1,15 @@
 import FancySlogan from "@/app/fancyslogan";
-import DefaulMDX from "@/layouts/defaultMdx";
+import DefaultMain from "@/layouts/defaultMain";
+import DefaultMDX from "@/layouts/defaultMdx";
 
 Welcome to PᴺCEL's website!
 
 export default function Home({children}) {
-  return <>
+  return <DefaultMain>
     <div className="my-8">
       <FancySlogan />
     </div>
-    <DefaulMDX>{children}</DefaulMDX>
-  </>
+    <DefaultMDX>{children}</DefaultMDX>
+  </DefaultMain>
 
 }

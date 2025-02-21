@@ -18,6 +18,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         return <pre>{children}</pre>;
       }
     },
+    h1: ({ id, children }) => {
+      return (
+        <Link href={`#${id}`} className="link-hover">
+          <h1 id={id}>{children}</h1>
+        </Link>
+      );
+    },
     h2: ({ id, children }) => {
       return (
         <Link href={`#${id}`} className="link-hover">
