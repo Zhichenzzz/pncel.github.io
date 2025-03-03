@@ -11,7 +11,8 @@ export default function MemberCard({ member }: Readonly<{ member: Member }>) {
   const placeholder = composeHeadshotPlaceholder(member.person!);
 
   return (
-    <div className="shadow-xl rounded-xl overflow-clip w-full max-w-[512px] break-inside-avoid-column mb-4 mx-auto">
+    <div className={"w-full max-w-sm mb-4 mx-auto " +
+        "shadow-xl rounded-xl overflow-clip break-inside-avoid-column"}>
       <Link href={`/team/${memberId}`}>
         <div className="w-full p-4 gap-8 m-auto flex flex-row items-center bg-neutral">
           <div
@@ -38,15 +39,17 @@ export default function MemberCard({ member }: Readonly<{ member: Member }>) {
             )}
           </div>
           <div className="flex flex-col justify-center items-start text-neutral-content">
-            <h2 className="text-lg lg:text-xl font-bold">{fullname}</h2>
-            <p className="text-sm lg:text-base">{position}</p>
+            <h2 className="text-md lg:text-lg font-bold">{fullname}</h2>
+            <p className="text-sm lg:text-md text-neutral-content/60">{position}</p>
           </div>
         </div>
+        {/*
         {shortbio && (
           <div className="w-full p-4 bg-secondary text-secondary-content">
             <p>{shortbio}</p>
           </div>
         )}
+          */}
       </Link>
     </div>
   );

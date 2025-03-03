@@ -52,7 +52,7 @@ export default function PubEntry({
     <div
       className={
         `${altStyle || (useDarkTheme ? "bg-base-300" : "bg-base-200")} text-base-content ` +
-        "flex flex-col items-start px-2 pt-1 pb-2 rounded-lg gap-1"
+        "flex flex-col items-start px-2 pt-1 pb-2 rounded-lg gap-1 max-w-5xl"
       }
     >
       <p className="font-semibold text-md 2xl:text-lg">{pub.title}</p>

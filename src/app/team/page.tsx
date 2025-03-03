@@ -46,7 +46,7 @@ export default async function Team() {
           members.length > 0 && (
             <div key={role}>
               <p className="divider text-xl 2xl:text-2xl">{role}</p>
-              <div className="columns-1 lg:columns-2 2xl:columns-3 gap-x-4 py-4">
+              <div className="columns-1 sm:columns-2 xl:columns-3 2xl:columns-4 gap-x-4 py-4">
                 {members.map((m) => (
                   <MemberCard member={m} key={m.memberId}></MemberCard>
                 ))}

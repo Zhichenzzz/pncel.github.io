@@ -11,6 +11,8 @@ import {
   faEnvelope,
   faLocationDot,
   faGlobe,
+  faQuoteLeft,
+  faBook,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faLinkedin,
@@ -244,32 +246,40 @@ export default async function MemberPage({ params: { memberId } }: Params) {
         <div className="divider max-lg:hidden"></div>
         <ul className="menu w-full max-lg:hidden">
           <li>
-            <Link href="#personal-statement">Personal Statement</Link>
+            <Link href="#personal-statement">
+              <FontAwesomeIcon icon={faQuoteLeft} /> Personal Statement
+            </Link>
           </li>
           {pubs.length > 0 && (
             <li>
-              <Link href="#selected-publications">Selected Publications</Link>
+              <Link href="#selected-publications">
+                <FontAwesomeIcon icon={faBook} /> Selected Publications
+              </Link>
             </li>
           )}
         </ul>
       </div>
-      <div
-        className="flex-grow min-w-0 lg:max-w-screen-sm xl:max-w-screen-md 2xl:max-w-screen-lg lg:py-4"
-      >
+      <div className="flex-grow min-w-0 lg:max-w-screen-sm xl:max-w-screen-md 2xl:max-w-screen-lg lg:py-4">
         <DefaultMDX>
-          <h2 id="personal-statement">Personal Statement</h2>
-          <MDXRemote
-            source={mdxSrc || "This person is busy changing the world..."}
-            components={useMDXComponents({})}
-          />
+          <h2 id="personal-statement">
+            <FontAwesomeIcon icon={faQuoteLeft} /> Personal Statement
+          </h2>
+          <div className="pl-4">
+            <MDXRemote
+              source={mdxSrc || "This person is busy changing the world..."}
+              components={useMDXComponents({})}
+            />
+          </div>
         </DefaultMDX>
         {pubs.length > 0 && (
           <>
             <div className="divider"></div>
             <DefaultMDX className="py-4">
-              <h2 id="selected-publications">Selected Publications</h2>
+              <h2 id="selected-publications">
+                <FontAwesomeIcon icon={faBook} /> Selected Publications
+              </h2>
             </DefaultMDX>
-            <div>
+            <div className="pl-4">
               <PubList pubs={pubs} highlightedPersonId={member.person!.id} />
               <PubListFootnote />
             </div>
