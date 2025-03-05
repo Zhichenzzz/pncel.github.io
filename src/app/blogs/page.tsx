@@ -19,7 +19,7 @@ async function getAllBlogs() {
     .toSorted(
       (a, b) =>
         Date.parse(b.exports["creation_time"]) -
-        Date.parse(a.exports["creation_time"]),
+        Date.parse(a.exports["creation_time"])
     );
   return blogs;
 }
@@ -29,6 +29,8 @@ export default async function Blogs() {
   return (
     <DefaultMain>
       <DefaultMDX>
+        <h1>Blogs</h1>
+        {blogs.length === 0 && <p>Under construction...</p>}
         {blogs.map(({ exports }) => (
           <p key={exports["title"]}>
             {exports["title"]}, {exports["creation_time"]}

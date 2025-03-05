@@ -11,6 +11,7 @@ export default async function News() {
   return (
     <DefaultMain>
       <DefaultMDX>
+        <h1>News</h1>
         <p>Under construction...</p>
       </DefaultMDX>
     </DefaultMain>

@@ -9,6 +9,8 @@ const keywords = [
   "Power-Efficient",
   "Programmer-Friendly",
   "Low-Power",
+  "Pacific Northwest",
+  "Pipelined",
 ];
 
 export default function FancySlogan() {

@@ -14,6 +14,7 @@ export default async function Projects() {
   return (
     <DefaultMain>
       <DefaultMDX>
+        <h1>Projects</h1>
         <p>Under construction...</p>
         {/*
         <div>
