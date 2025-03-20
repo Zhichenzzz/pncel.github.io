@@ -18,6 +18,18 @@ Once we have more publications (or you're welcome to add your pre-UW publication
 ## Command Scratchpad
 
 ```bash
+# == Installation ============================================================
+# install nvm
+#   from scratch & locally:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+# follow prompt to restart terminal or source NVM into your path
+
+# install dependencies
+nvm install stable 
+nvm use stable
+npm install .   # in this repo's root directory
+
+# == Development ============================================================
 # w/ NVM (NodeJS Version Management)
 nvm use stable  # v20.11.1
 
