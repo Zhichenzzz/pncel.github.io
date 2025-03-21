@@ -31,16 +31,14 @@ nvm use stable
 npm install -D .   # in this repo's root directory
 ```
 
-## Development
-
-#### Enter dev environment
+## Enter dev environment
 
 ```bash
 # w/ NVM (NodeJS Version Management)
 nvm use stable
 ```
 
-#### **BEFORE COMMIT**
+## **BEFORE COMMIT**
 
 ```bash
 npm run lint
@@ -48,6 +46,24 @@ npm run lint
 
 npm run format
 ```
+
+## **CLI TOOLS**
+
+#### New blog
+
+```bash
+npm run blog "Your title here"
+# creates /src/app/blogs/[blogId]/your-title-here-YYYY-MM-DD.mdx if the file does not already exists
+```
+
+#### Add publication with DOI
+
+```bash
+npm run pub add-doi <doi> [<doi> ...]
+# then follow the interactive command lines for more
+```
+
+## Dev tools
 
 #### Edit database using web GUI (no changes made to [`/prisma/schema.prisma`](/prisma/schema.prisma))
 
@@ -61,11 +77,4 @@ npx prisma studio
 ```bash
 npm run dev
 # then visit http://localhost:3000 (or another port according to the command line output)
-```
-
-#### New blog
-
-```bash
-npm run blog "Your title here"
-# creates /src/app/blogs/[blogId]/your-title-here-YYYY-MM-DD.mdx if the file does not already exists
 ```
