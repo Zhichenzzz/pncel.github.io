@@ -19,7 +19,7 @@ async function getAllBlogs() {
     .toSorted(
       (a, b) =>
         Date.parse(b.exports["creation_time"]) -
-        Date.parse(a.exports["creation_time"])
+        Date.parse(a.exports["creation_time"]),
     );
   return blogs;
 }
@@ -31,11 +31,17 @@ export default async function Blogs() {
       <DefaultMDX>
         <h1>Blogs</h1>
         {blogs.length === 0 && <p>Under construction...</p>}
-        {blogs.map(({ exports }) => (
-          <p key={exports["title"]}>
-            {exports["title"]}, {exports["creation_time"]}
-          </p>
-        ))}
+        {blogs.map(({ exports }) => {
+          const date = new Date(exports["creation_time"]).toLocaleString(
+            "en-US",
+            { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+          );
+          return (
+            <p key={exports["title"]}>
+              {exports["title"]}, {date}
+            </p>
+          );
+        })}
       </DefaultMDX>
     </DefaultMain>
   );

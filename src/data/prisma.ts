@@ -66,7 +66,7 @@ function reorder<_T, T, KT>(
   array: _T[],
   match: (item: _T, key: KT) => boolean,
   validate: (item: _T) => T,
-  keys: string | null
+  keys: string | null,
 ): T[] | undefined {
   let reordered: T[] | undefined = undefined;
   let order: KT[];
@@ -103,7 +103,7 @@ export function validateTag(tag: _TagExt): Tag {
   const TagTypeValues = Object.keys(TagType).filter((k) => isNaN(Number(k)));
   if (tag.type && !TagTypeValues.includes(tag.type)) {
     throw new Error(
-      `Database data error: invalid type (${tag.type}) for tag ${tag.id}`
+      `Database data error: invalid type (${tag.type}) for tag ${tag.id}`,
     );
   }
 
@@ -126,11 +126,11 @@ export function validatePerson(person: _PersonExt): Person {
 export function validateMember(member: _MemberExt): Member {
   // check "role" value
   const MemberRoleValues = Object.keys(MemberRole).filter((k) =>
-    isNaN(Number(k))
+    isNaN(Number(k)),
   );
   if (member.role && !MemberRoleValues.includes(member.role)) {
     throw new Error(
-      `Database data error: invalid role (${member.role}) for member (id:${member.memberId})`
+      `Database data error: invalid role (${member.role}) for member (id:${member.memberId})`,
     );
   }
 
@@ -146,11 +146,11 @@ export function validateMember(member: _MemberExt): Member {
 export function validateVenue(venue: _VenueExt): Venue {
   // check "type" value
   const VenueTypeValues = Object.keys(VenueType).filter((k) =>
-    isNaN(Number(k))
+    isNaN(Number(k)),
   );
   if (venue.type && !VenueTypeValues.includes(venue.type)) {
     throw new Error(
-      `Database data error: invalid type (${venue.type}) for venue ${venue.id}`
+      `Database data error: invalid type (${venue.type}) for venue ${venue.id}`,
     );
   }
 
@@ -166,7 +166,7 @@ export function validatePubResource(rsc: _PubRscExt): PubResource {
   const LinkIconValues = Object.keys(LinkIcon).filter((k) => isNaN(Number(k)));
   if (rsc.icon && !LinkIconValues.includes(rsc.icon)) {
     throw new Error(
-      `Database data error: invalid icon (${rsc.icon}) for resource (id:${rsc.id})`
+      `Database data error: invalid icon (${rsc.icon}) for resource (id:${rsc.id})`,
     );
   }
 
@@ -182,7 +182,7 @@ export function validatePublication(pub: _PubExt): Publication {
   const PubTypeValues = Object.keys(PubType).filter((k) => isNaN(Number(k)));
   if (pub.type && !PubTypeValues.includes(pub.type)) {
     throw new Error(
-      `Database data error: invalid type (${pub.type}) for publication "${pub.id}"`
+      `Database data error: invalid type (${pub.type}) for publication "${pub.id}"`,
     );
   }
 
@@ -196,11 +196,11 @@ export function validatePublication(pub: _PubExt): Publication {
           return item.id === key;
         },
         validatePerson,
-        pub.authorOrder
+        pub.authorOrder,
       );
     } catch (e) {
       throw new Error(
-        `Database data error: reordering authors for publication ${pub.id}, ecode = ${(e as Error).message}`
+        `Database data error: reordering authors for publication ${pub.id}, ecode = ${(e as Error).message}`,
       );
     }
   }
@@ -227,11 +227,11 @@ export function validateTeam(team: _TeamExt): Team {
           return item.id === key;
         },
         validatePerson,
-        team.memberOrder
+        team.memberOrder,
       );
     } catch (e) {
       throw new Error(
-        `Database data error: reordering members for team ${team.id}, ecode = ${(e as Error).message}`
+        `Database data error: reordering members for team ${team.id}, ecode = ${(e as Error).message}`,
       );
     }
   }
@@ -262,11 +262,11 @@ export function validateProject(project: _ProjectExt): Project {
           return item.memberId === key;
         },
         validateMember,
-        project.memberOrder
+        project.memberOrder,
       );
     } catch (e) {
       throw new Error(
-        `Database data error: reordering members for project ${project.projectId}, ecode = ${(e as Error).message}`
+        `Database data error: reordering members for project ${project.projectId}, ecode = ${(e as Error).message}`,
       );
     }
   }
@@ -281,11 +281,11 @@ export function validateProject(project: _ProjectExt): Project {
           return item.id === key;
         },
         validateTeam,
-        project.teamOrder
+        project.teamOrder,
       );
     } catch (e) {
       throw new Error(
-        `Database data error: reordering teams for project ${project.projectId}, ecode = ${(e as Error).message}`
+        `Database data error: reordering teams for project ${project.projectId}, ecode = ${(e as Error).message}`,
       );
     }
   }
@@ -300,7 +300,7 @@ export function validateProject(project: _ProjectExt): Project {
 export const queryPubExt = Prisma.validator(
   prisma,
   "publication",
-  "findMany"
+  "findMany",
 )({
   include: {
     tags: true,

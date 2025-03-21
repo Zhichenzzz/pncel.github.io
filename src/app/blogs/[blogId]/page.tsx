@@ -40,7 +40,7 @@ export default async function BlogPage({ params: { blogId } }: Params) {
     title = require(`@/app/blogs/[blogId]/${blogId}.mdx`);
     mdxSrc = await readFile(
       `${process.cwd()}/src/app/blogs/[blogId]/${blogId}.mdx`,
-      "utf-8"
+      "utf-8",
     );
   }
 

@@ -11,32 +11,61 @@ Once we have more publications (or you're welcome to add your pre-UW publication
 ## Tech Stack
 
 - [Next.js](https://nextjs.org)
-- [Prisma ORM](https://www.prisma.io/)
+- [Prisma ORM](https://www.prisma.io/) with [SQLite](https://www.sqlite.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [DaisyUI](https://daisyui.com/)
 
-## Command Scratchpad
+# For developers
+
+## Installation
 
 ```bash
-# == Installation ============================================================
 # install nvm
 #   from scratch & locally:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 # follow prompt to restart terminal or source NVM into your path
 
 # install dependencies
-nvm install stable 
+nvm install stable
 nvm use stable
-npm install .   # in this repo's root directory
+npm install -D .   # in this repo's root directory
+```
 
-# == Development ============================================================
+## Development
+
+#### Enter dev environment
+
+```bash
 # w/ NVM (NodeJS Version Management)
-nvm use stable  # v20.11.1
+nvm use stable
+```
 
-# edit database (w/o changing the schema!)
+#### **BEFORE COMMIT**
+
+```bash
+npm run lint
+# fix any reported errors
+
+npm run format
+```
+
+#### Edit database using web GUI (no changes made to [`/prisma/schema.prisma`](/prisma/schema.prisma))
+
+```bash
 npx prisma studio
 # then visit http://localhost:5555 (or another port according to the command line output)
+```
 
-# interactive debug
+#### Live server
+
+```bash
 npm run dev
+# then visit http://localhost:3000 (or another port according to the command line output)
+```
+
+#### New blog
+
+```bash
+npm run blog "Your title here"
+# creates /src/app/blogs/[blogId]/your-title-here-YYYY-MM-DD.mdx if the file does not already exists
 ```

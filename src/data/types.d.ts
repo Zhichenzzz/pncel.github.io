@@ -60,13 +60,13 @@ export type Team = _Team & {
   members?: Person[];
   group?: Group;
   projects?: Project[];
-}
+};
 
 export type Group = _Group & {
   teams?: Team[];
-}
+};
 
 export type Project = _Project & {
   members?: Member[];
   teams?: Team[];
-}
+};

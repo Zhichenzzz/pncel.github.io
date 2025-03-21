@@ -52,7 +52,7 @@ export default async function Team() {
                 ))}
               </div>
             </div>
-          )
+          ),
       )}
     </DefaultMain>
   );

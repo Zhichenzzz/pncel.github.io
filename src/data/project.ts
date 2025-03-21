@@ -18,16 +18,16 @@ export async function getProject(projectId: string) {
     include: {
       members: {
         include: {
-          person: true
-        }
+          person: true,
+        },
       },
       teams: {
         include: {
           group: true,
           members: true,
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
   if (!project) {
