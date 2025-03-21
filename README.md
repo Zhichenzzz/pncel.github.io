@@ -63,6 +63,12 @@ npm run pub add-doi <doi> [<doi> ...]
 # then follow the interactive command lines for more
 ```
 
+#### Update all publications' bibtex with DOI
+
+```bash
+npm run pub update-doi
+```
+
 ## Dev tools
 
 #### Edit database using web GUI (no changes made to [`/prisma/schema.prisma`](/prisma/schema.prisma))

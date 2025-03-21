@@ -258,6 +258,37 @@ if (mainOptions.command === "add-doi") {
 /* ==============================================================================
 == Command: update-doi ==========================================================
 ============================================================================== */
+if (mainOptions.command === "update-doi") {
+  // for now only update bibtex
+  const pubs = await prisma.publication.findMany({
+    where: {
+      doi: {
+        not: null,
+      },
+    },
+  });
+
+  for (const pub of pubs) {
+    const doi = sanitizeDOI(pub.doi);
+    if (doi === null) {
+      continue;
+    }
+
+    const cite = new Cite(doi);
+    const bibtex = cite.format("bibtex");
+    await prisma.publication.update({
+      where: {
+        id: pub.id,
+      },
+      data: {
+        bibtex: bibtex,
+      },
+    });
+    console.log(`Updated bibtex for publication ${pub.title} (id=${pub.id})`);
+  }
+
+  process.exit(0);
+}
 
 /* ==============================================================================
 == Command: help ================================================================
