@@ -1,15 +1,8 @@
-import { VenueType } from "./enums";
 import prisma, { queryPubExt, validatePublication } from "./prisma";
-import type { Publication } from "./types";
 
-export async function getAllPubs(
-  venueTypes: VenueType[] = [VenueType.conference, VenueType.journal],
-) {
+export async function getAllPubs() {
   const pubs = await prisma.publication.findMany(queryPubExt);
-  const validated = pubs
-    .map(validatePublication)
-    .filter((pub) => venueTypes.includes(pub.venue!.type));
-  return validated;
+  return pubs.map(validatePublication);
 }
 
 export async function getPubsByPerson(
@@ -44,41 +37,4 @@ export async function getPubsByPerson(
       }));
 
   return pubs.map(validatePublication);
-}
-
-export function generateBibtexForPub(pub: Publication) {
-  var bibtex = `@${pub.type}{pncel${pub.id},
-  title={{${pub.title}}},
-  author={${pub.authors!.map((author) => author.lastname + ", " + author.firstname).join(" and ")}},`;
-
-  if (pub.time) {
-    bibtex += `
-  year={${pub.time.getFullYear()}},`;
-  }
-
-  if (pub.volume !== null) {
-    bibtex += `
-  volume={${pub.volume}},`;
-  }
-
-  if (pub.number !== null) {
-    bibtex += `
-  number={${pub.number}},`;
-  }
-
-  if (pub.doi) {
-    bibtex += `
-  doi={${pub.doi}},`;
-  }
-
-  if (pub.fromPage !== null) {
-    bibtex += `
-  pages={${pub.fromPage}-${pub.toPage || pub.fromPage}},`;
-  }
-
-  bibtex += `
-  booktitle={${pub.booktitle}}
-}`;
-
-  return bibtex;
 }

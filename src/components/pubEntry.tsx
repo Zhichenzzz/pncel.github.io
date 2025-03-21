@@ -16,10 +16,10 @@ import {
   faP,
   fa1,
 } from "@fortawesome/free-solid-svg-icons";
-import { generateBibtexForPub } from "@/data/pub";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import type { Publication } from "@/data/types";
-import { TagType, VenueType } from "@/data/enums";
+import sanitizeHtml from "sanitize-html";
+import type { Publication, Tag } from "@/data/types";
+import { LinkIcon, TagType } from "@/data/enums";
 import DataContext from "@/app/context";
 config.autoAddCss = false;
 
@@ -33,10 +33,22 @@ export default function PubEntry({
   highlightedPersonId?: number;
 }>) {
   const [showBibtex, setShowBibtex] = useState(false);
-  const tags = pub
-    .tags!.filter((tag) => tag.level && tag.level >= 100)
-    .sort((a, b) => (b.level || 0) - (a.level || 0));
-  const bibtex = generateBibtexForPub(pub);
+  let tags: Tag[] = [];
+  if (pub.venueKey) {
+    tags.push({
+      id: -1,
+      type: TagType.venue,
+      label: pub.venueKey,
+      level: null,
+    });
+  }
+  if (pub.tags) {
+    tags.push(
+      ...pub.tags
+        .filter((tag) => tag.level && tag.level >= 100)
+        .sort((a, b) => (b.level || 0) - (a.level || 0)),
+    );
+  }
   const bibtexRef = useRef<HTMLDivElement>(null);
 
   const context = useContext(DataContext);
@@ -55,20 +67,17 @@ export default function PubEntry({
         "flex flex-col items-start px-2 pt-1 pb-2 rounded-lg gap-1 max-w-5xl"
       }
     >
-      <p className="font-semibold text-md 2xl:text-lg">{pub.title}</p>
-      <div className="flex flex-row items-start gap-1 flex-wrap">
-        <TagBadge
-          tag={{
-            id: -1,
-            type: TagType.venue,
-            label: pub.venue!.abbr,
-            level: null,
-          }}
-        />
-        {tags.map((tag, i) => (
-          <TagBadge tag={tag} key={i} />
-        ))}
-      </div>
+      <p
+        className="font-semibold text-md 2xl:text-lg"
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(pub.title) }}
+      />
+      {tags.length > 0 && (
+        <div className="flex flex-row items-start gap-1 flex-wrap">
+          {tags.map((tag, i) => (
+            <TagBadge tag={tag} key={i} />
+          ))}
+        </div>
+      )}
       <p className="text-sm 2xl:text-md">
         {pub.authors!.map((author, i) => {
           const fullName = composeFullName(author);
@@ -135,31 +144,15 @@ export default function PubEntry({
         })}
       </p>
       <p className="text-sm 2xl:text-md font-light text-base-content/60">
-        {pub.booktitle} (
-        {pub.venueLink ? (
-          <a
-            href={pub.venueLink}
-            className="link link-hover whitespace-nowrap"
-            target="_blank"
-          >
-            {pub.venue!.abbr}
-            <FontAwesomeIcon
-              className="text-xs ml-0.5"
-              icon={faUpRightFromSquare}
-            />
-          </a>
-        ) : (
-          pub.venue!.abbr
-        )}
-        )
+        {pub.booktitle}
         {pub.time &&
           `, ${pub.time.toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
           })}`}
-        {pub.location && `, ${pub.location}`}
+        {/* pub.location && `, ${pub.location}` */}
       </p>
-      {(bibtex || pub.doi || pub.authorsCopy || pub.resources!.length > 0) && (
+      {(pub.doi || pub.bibtex || pub.resources!.length > 0) && (
         <div className={`flex flex-row items-start gap-2 flex-wrap pt-1`}>
           {pub.doi && (
             <a
@@ -171,7 +164,7 @@ export default function PubEntry({
               DOI
             </a>
           )}
-          {bibtex && (
+          {pub.bibtex && (
             <button
               tabIndex={0}
               className="flex-none btn btn-xs btn-secondary px-2 py-1"
@@ -184,16 +177,6 @@ export default function PubEntry({
               Bibtex
             </button>
           )}
-          {pub.authorsCopy && (
-            <a
-              className="flex-none btn btn-xs btn-secondary px-2 py-1"
-              href={pub.authorsCopy}
-              target="_blank"
-            >
-              <FontAwesomeIcon icon={faFilePdf} />
-              Author&apos;s Copy
-            </a>
-          )}
           {pub.resources!.map((res) => (
             <a
               className="flex-none btn btn-xs btn-secondary px-2 py-1"
@@ -201,16 +184,18 @@ export default function PubEntry({
               target="_blank"
               key={res.id}
             >
-              {res.label === "Poster" || res.label === "Slides" ? (
+              {res.icon === LinkIcon.pdf ? (
                 <FontAwesomeIcon icon={faFilePdf} />
-              ) : res.label === "Recorded Talk" ? (
+              ) : res.icon === LinkIcon.video ? (
                 <FontAwesomeIcon icon={faVideo} />
-              ) : res.label === "GitHub" ? (
+              ) : res.icon === LinkIcon.github ? (
                 <FontAwesomeIcon icon={faGithub} />
-              ) : res.label === "arXiv" ? (
+              ) : res.icon === LinkIcon.arxiv ? (
                 <FontAwesomeIcon icon={faPaperPlane} />
-              ) : (
+              ) : res.icon === LinkIcon.website ? (
                 <FontAwesomeIcon icon={faGlobe} />
+              ) : (
+                <FontAwesomeIcon icon={faPaperPlane} />
               )}
               {res.label}
             </a>
@@ -225,7 +210,7 @@ export default function PubEntry({
           forwardRef={bibtexRef}
           addlOnBlur={() => setShowBibtex(false)}
         >
-          <code className="text-neutral-content">{bibtex}</code>
+          <code className="text-neutral-content">{pub.bibtex}</code>
         </CopyableCode>
       </div>
     </div>

@@ -86,17 +86,6 @@ model Member {
   projects Project[]
 }
 
-model Venue {
-  id   String @id
-  name String
-  abbr String
-
-  // @type: enum VenueType (src/data/enums.ts)
-  type String?
-
-  pubs Publication[]
-}
-
 model PubResource {
   id    Int         @id @default(autoincrement())
   label String
@@ -112,23 +101,13 @@ model Publication {
   id   Int   @id @default(autoincrement())
   tags Tag[]
 
-  // standard fields that map to Bibtex well
-  // @type: enum PubType (src/data/enums.ts)
-  type        String?
-  authors     Person[]
   title       String
-  venue       Venue    @relation(fields: [venueId], references: [id])
-  venueId     String
-  time        DateTime
-  location    String?
-  booktitle   String? // or `journal` for journal papers
-  volume      Int?
-  number      Int?
-  doi         String?
-  fromPage    Int?
-  toPage      Int?
-  authorsCopy String?
-  venueLink   String?
+  authors     Person[]
+  time        DateTime  // for sorting
+  doi         String?   // if set, can be used to update all other fields with citation-js
+  booktitle   String?   // or `journal` for journal papers
+  venueKey    String?   // unique key for each venue, typically the acronym (e.g., MICRO, ISCA)
+  bibtex      String?
 
   authorOrder  String // JSON array of person ids to order the authors correctly
   equalContrib Int? // the first N authors have equal contributions

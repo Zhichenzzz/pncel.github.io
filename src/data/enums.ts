@@ -21,23 +21,11 @@ export enum MemberRole {
   visitor = "Visitor",
 }
 
-export enum VenueType {
-  other,
-  conference = "Conference",
-  journal = "Journal",
-  workshop = "Workshop",
-}
-
 export enum LinkIcon {
   default,
   pdf,
   video,
-}
-
-export enum PubType {
-  unpublished = "unpublished",
-  inproceedings = "inproceedings",
-  masterthesis = "masterthesis",
-  phdthesis = "phdthesis",
-  misc = "misc",
+  github,
+  website,
+  arxiv,
 }

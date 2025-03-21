@@ -2,7 +2,6 @@ import {
   Tag as _Tag,
   Person as _Person,
   Member as _Member,
-  Venue as _Venue,
   PubResource as _PubResource,
   Publication as _Publication,
   Team as _Team,
@@ -10,14 +9,7 @@ import {
   Project as _Project,
 } from "@prisma/client";
 
-import {
-  TagType,
-  MemberRole,
-  VenueType,
-  LinkIcon,
-  PubType,
-  NewsType,
-} from "./enums";
+import { TagType, MemberRole, LinkIcon, NewsType } from "./enums";
 
 export type Tag = Omit<_Tag, "type"> & {
   type: TagType;
@@ -37,21 +29,15 @@ export type Member = Omit<_Member, "role"> & {
   projects?: Project[];
 };
 
-export type Venue = Omit<_Venue, "type"> & {
-  type: VenueType;
-  pubs?: Publication[];
-};
-
 export type PubResource = Omit<_PubResource, "icon"> & {
   icon: LinkIcon;
   pub?: Publication | null;
 };
 
-export type Publication = Omit<_Publication, "type"> & {
-  type: PubType;
+export type Publication = Omit<_Publication, "time"> & {
+  time: Date;
   tags?: Tag[];
   authors?: Person[];
-  venue?: Venue | null;
   resources?: PubResource[];
   selectedBy?: Member[];
 };

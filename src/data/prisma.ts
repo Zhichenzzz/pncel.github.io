@@ -3,7 +3,6 @@ import {
   Person as _Person,
   Member as _Member,
   Tag as _Tag,
-  Venue as _Venue,
   PubResource as _PubResource,
   Publication as _Publication,
   Team as _Team,
@@ -12,13 +11,12 @@ import {
   Prisma,
 } from "@prisma/client";
 
-import { MemberRole, TagType, VenueType, LinkIcon, PubType } from "./enums";
+import { MemberRole, TagType, LinkIcon } from "./enums";
 
 import type {
   Member,
   Person,
   Tag,
-  Venue,
   PubResource,
   Publication,
   Team,
@@ -40,12 +38,10 @@ type _MemberExt = _Member & {
   selectedPubs?: _PubExt[];
   projects?: _ProjectExt[];
 };
-type _VenueExt = _Venue & { pubs?: _PubExt[] };
 type _PubRscExt = _PubResource & { pub?: _PubExt };
 type _PubExt = _Publication & {
   tags?: _TagExt[];
   authors?: _PersonExt[];
-  venue?: _VenueExt;
   resources?: _PubRscExt[];
   selectedBy?: _MemberExt[];
 };
@@ -143,24 +139,6 @@ export function validateMember(member: _MemberExt): Member {
   };
 }
 
-export function validateVenue(venue: _VenueExt): Venue {
-  // check "type" value
-  const VenueTypeValues = Object.keys(VenueType).filter((k) =>
-    isNaN(Number(k)),
-  );
-  if (venue.type && !VenueTypeValues.includes(venue.type)) {
-    throw new Error(
-      `Database data error: invalid type (${venue.type}) for venue ${venue.id}`,
-    );
-  }
-
-  return {
-    ...venue,
-    type: VenueType[(venue.type || "default") as keyof typeof VenueType],
-    pubs: venue.pubs?.map(validatePublication),
-  };
-}
-
 export function validatePubResource(rsc: _PubRscExt): PubResource {
   // check "icon" value
   const LinkIconValues = Object.keys(LinkIcon).filter((k) => isNaN(Number(k)));
@@ -178,14 +156,6 @@ export function validatePubResource(rsc: _PubRscExt): PubResource {
 }
 
 export function validatePublication(pub: _PubExt): Publication {
-  // check "type" value
-  const PubTypeValues = Object.keys(PubType).filter((k) => isNaN(Number(k)));
-  if (pub.type && !PubTypeValues.includes(pub.type)) {
-    throw new Error(
-      `Database data error: invalid type (${pub.type}) for publication "${pub.id}"`,
-    );
-  }
-
   // correct author order
   let authors: Person[] | undefined = undefined;
   if (pub.authors) {
@@ -207,10 +177,8 @@ export function validatePublication(pub: _PubExt): Publication {
 
   return {
     ...pub,
-    type: PubType[(pub.type || "unpublished") as keyof typeof PubType],
     tags: pub.tags?.map(validateTag),
     authors: authors,
-    venue: pub.venue && validateVenue(pub.venue),
     resources: pub.resources?.map(validatePubResource),
     selectedBy: pub.selectedBy?.map(validateMember),
   };
@@ -304,7 +272,6 @@ export const queryPubExt = Prisma.validator(
 )({
   include: {
     tags: true,
-    venue: true,
     authors: {
       include: {
         member: true,
