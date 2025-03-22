@@ -14,7 +14,7 @@ export default function PubList({
   altStyle?: boolean;
 }>) {
   return (
-    <div className="flex flex-col gap-4 min-w-0">
+    <div className="flex flex-col gap-4 min-w-0 w-full">
       {pubs.map((pub, idx) => {
         return (
           <PubEntry

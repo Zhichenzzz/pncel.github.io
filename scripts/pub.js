@@ -96,7 +96,7 @@ const help_add_doi = [
       "A node.js script for easier management of the publications without dealing with the SQLite database",
   },
   {
-    header: "Command: add_doi",
+    header: "Command: add-doi",
     content: "Add a publication with doi",
   },
   {
@@ -137,10 +137,11 @@ if (mainOptions.command === "add-doi") {
     const cite = new Cite(doi);
 
     // sort out authors to create & connect
-    let authors = []; // { operation: "create" | "connect",
+    // { operation: "create" | "connect",
     //   id?: number,
     //   data?: { firstname: string, lastname: string }
     // }
+    let authors = [];
 
     // check authors
     try {

@@ -34,8 +34,7 @@ export type PubResource = Omit<_PubResource, "icon"> & {
   pub?: Publication | null;
 };
 
-export type Publication = Omit<_Publication, "time"> & {
-  time: Date;
+export type Publication = _Publication & {
   tags?: Tag[];
   authors?: Person[];
   resources?: PubResource[];
