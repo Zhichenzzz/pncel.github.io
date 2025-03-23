@@ -333,7 +333,9 @@ function getPublicationDate(citeData) {
     // arXiv DOIs follow the format 10.48550/arXiv.YYMM.NNNNN
     const match = citeData.DOI.match(/arxiv\.(\d{2})(\d{2})/i);
     if (match) {
-      const year = 2000 + parseInt(match[1]); // Assuming 20xx for now
+      const yearDigits = parseInt(match[1]);
+      // Use 19xx for years >= 90, otherwise 20xx
+      const year = yearDigits >= 90 ? 1900 + yearDigits : 2000 + yearDigits;
       const month = parseInt(match[2]) - 1; // JS months are 0-indexed
       const day = 1;
       return new Date(year, month, day).toISOString();
@@ -363,7 +365,6 @@ function getPublicationDate(citeData) {
     }
   }
 
-  // If no valid date is found
-  console.log("Warning: Could not find publication date, using current date");
-  return new Date().toISOString();
+  // If no valid date is found, throw an error
+  throw new Error(`Could not find publication date for ${citeData.title || 'publication'}`);
 }
